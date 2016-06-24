@@ -1,0 +1,37 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+
+<#
+const string ns = "CallMeBack.Domain.UnitTests";
+const string className = "PermissionTest";
+#>
+
+using System.Security;
+using System.Threading.Tasks;
+
+using Basics.Containers;
+using Basics.Domain;
+using Basics.Testing.Xunit;
+
+using CallMeBack.Domain.Contracts.Interfaces;
+using CallMeBack.Domain.UnitTests.Infrastructure;
+
+using Xunit;
+
+namespace <#= ns #>
+{
+    public partial class <#= className #> : BaseUserContextTest<ContainerFixture, UserContextFixture>
+	{
+        private readonly IDomainFactory _domainFactory;
+
+        public <#= className #>(ContainerFixture containerFixture, UserContextFixture userContextFixture)
+            : base(containerFixture, userContextFixture)
+        {
+            _domainFactory = containerFixture.Container.Resolve<IDomainFactory>();
+        }
+	}
+}

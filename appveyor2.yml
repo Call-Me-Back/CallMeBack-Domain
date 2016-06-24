@@ -1,0 +1,21 @@
+version: 1.0.{build}
+assembly_info:
+  patch: true
+  file: '**\SolutionInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}-pre'
+before_build:
+- cmd: nuget restore CallMeBack\Domain.sln
+build:
+  project: CallMeBack\Domain.sln
+  publish_nuget: true
+  publish_nuget_symbols: true
+  include_nuget_references: true
+  verbosity: minimal
+deploy:
+- provider: NuGet
+  server: https://www.myget.org/F/callmeback/api/v2/package
+  api_key:
+    secure: 3tEiaoqZlTJcJkAX+3wWyp3mbCYuJpALEFzTEaum6ACiXbWgsa1kWYGBi3TUFY7c
+  symbol_server: http://srv.symbolsource.org/pdb/MyGet/jeevanjj/b4cc8b45-2ff1-4cc7-9415-5028dd180b98
