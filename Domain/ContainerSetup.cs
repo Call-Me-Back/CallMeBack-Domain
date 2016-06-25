@@ -10,7 +10,7 @@ namespace FullStackTraining.CallMeBack.Domain
         public static void Setup(IContainerBuilder builder)
         {
             builder.RegisterDomains(Assembly.GetExecutingAssembly());
-            global::FullStackTraining.CallMeBack.Repository.ContainerSetup.Register(builder);
+            Repository.ContainerSetup.Register(builder);
         }
     }
 }
