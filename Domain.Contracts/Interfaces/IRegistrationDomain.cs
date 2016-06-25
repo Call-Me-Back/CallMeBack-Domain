@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using FullStackTraining.CallMeBack.Domain.Contracts.Models;
@@ -31,6 +32,11 @@ namespace FullStackTraining.CallMeBack.Domain.Contracts.Interfaces
 
     public static class RegistrationDomainExtensions
     {
+        public static async Task<CallbackNumber> GetCallbackNumber(this IRegistrationDomain domain, Guid id)
+        {
+            return (await domain.GetCallbackNumbers(new[] { id }))?.FirstOrDefault();
+        }
+
         public static async Task RegisterCallbackNumber(this IRegistrationDomain domain, CallbackNumber number)
         {
             await domain.RegisterCallbackNumbers(new[] {number});
