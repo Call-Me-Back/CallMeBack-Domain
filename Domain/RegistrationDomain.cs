@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Basics;
@@ -21,6 +22,12 @@ namespace FullStackTraining.CallMeBack.Domain
         public RegistrationDomain(IRegistrationRepository repository)
         {
             _repository = repository;
+        }
+
+        async Task<CallbackNumberCollection> IRegistrationDomain.GetCallbackNumbers(IEnumerable<Guid> ids)
+        {
+            User.Demand(Permissions.SearchCallbackNumbers);
+            return await _repository.GetCallbackNumbers(ids);
         }
 
         async Task IRegistrationDomain.RegisterCallbackNumbers(IEnumerable<CallbackNumber> numbers)

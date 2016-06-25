@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using FullStackTraining.CallMeBack.Domain.Contracts.Models;
@@ -8,6 +9,11 @@ namespace FullStackTraining.CallMeBack.Repository
 {
     public sealed class RegistrationRepository : IRegistrationRepository
     {
+        Task<CallbackNumberCollection> IRegistrationRepository.GetCallbackNumbers(IEnumerable<Guid> ids)
+        {
+            throw new NotImplementedException();
+        }
+
         Task IRegistrationRepository.RegisterCallbackNumbers(IEnumerable<CallbackNumber> numbers)
         {
             return Task.FromResult(0);
