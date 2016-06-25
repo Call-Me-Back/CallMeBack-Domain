@@ -15,3 +15,9 @@ build:
   include_nuget_references: true
   parallel: true
   verbosity: minimal
+deploy:
+- provider: NuGet
+  server: https://www.myget.org/F/full-stack-training/api/v2/package
+  api_key:
+    secure: TBghYs0vLRIqxJK7TYR0cHpuybQ61ZyvBd/25wGdY0AyKWcKyCgSZ77gELSbyP8s
+  symbol_server: https://nuget.symbolsource.org/MyGet/full-stack-training
