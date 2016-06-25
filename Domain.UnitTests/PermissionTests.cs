@@ -14,14 +14,15 @@ using Xunit;
 
 namespace FullStackTraining.CallMeBack.Domain.UnitTests
 {
-    public sealed class PermissionTests : BaseUserContextTest<ContainerFixture, UserContextFixture>
+    public sealed class PermissionTests : IClassFixture<UserContextFixture>
     {
+        private readonly UserContextFixture _user;
         private readonly IBaseDomain _baseDomain;
         private readonly IRegistrationDomain _registrationDomain;
 
-        public PermissionTests(ContainerFixture containerFixture, UserContextFixture userContextFixture)
-            : base(containerFixture, userContextFixture)
+        public PermissionTests(UserContextFixture userContextFixture)
         {
+            _user = userContextFixture;
             var registrationRepository = Substitute.For<IRegistrationRepository>();
             _registrationDomain = new RegistrationDomain(registrationRepository);
             _baseDomain = (IBaseDomain)_registrationDomain;
@@ -31,7 +32,7 @@ namespace FullStackTraining.CallMeBack.Domain.UnitTests
         [InlineData(UserTypes.AuthorizedAdmin)]
         public async Task Can_register_callback_number(UserTypes userType)
         {
-            _baseDomain.User = User[userType];
+            _baseDomain.User = _user[userType];
             await _registrationDomain.RegisterCallbackNumber(null);
         }
 
@@ -41,7 +42,7 @@ namespace FullStackTraining.CallMeBack.Domain.UnitTests
         [InlineData(UserTypes.UnauthorizedUser)]
         public async Task Cannot_register_callback_numbers(UserTypes userType)
         {
-            _baseDomain.User = User[userType];
+            _baseDomain.User = _user[userType];
             await Assert.ThrowsAsync<SecurityException>(() =>
                 _registrationDomain.RegisterCallbackNumber(null));
         }
@@ -51,7 +52,7 @@ namespace FullStackTraining.CallMeBack.Domain.UnitTests
         [InlineData(UserTypes.AuthorizedUser)]
         public async Task Can_search_callback_numbers(UserTypes userType)
         {
-            _baseDomain.User = User[userType];
+            _baseDomain.User = _user[userType];
             await _registrationDomain.SearchCallbackNumbers(null);
         }
 
@@ -60,7 +61,7 @@ namespace FullStackTraining.CallMeBack.Domain.UnitTests
         [InlineData(UserTypes.UnauthorizedUser)]
         public async Task Cannot_search_callback_numbers(UserTypes userType)
         {
-            _baseDomain.User = User[userType];
+            _baseDomain.User = _user[userType];
             await Assert.ThrowsAsync<SecurityException>(() =>
                 _registrationDomain.SearchCallbackNumbers(null));
         }
@@ -69,7 +70,7 @@ namespace FullStackTraining.CallMeBack.Domain.UnitTests
         [InlineData(UserTypes.AuthorizedAdmin)]
         public async Task Can_register_favorite(UserTypes userType)
         {
-            _baseDomain.User = User[userType];
+            _baseDomain.User = _user[userType];
             await _registrationDomain.RegisterFavorite(null);
         }
 
@@ -79,7 +80,7 @@ namespace FullStackTraining.CallMeBack.Domain.UnitTests
         [InlineData(UserTypes.UnauthorizedUser)]
         public async Task Cannot_register_favorite(UserTypes userType)
         {
-            _baseDomain.User = User[userType];
+            _baseDomain.User = _user[userType];
             await Assert.ThrowsAsync<SecurityException>(() =>
                 _registrationDomain.RegisterFavorites(null));
         }
@@ -89,7 +90,7 @@ namespace FullStackTraining.CallMeBack.Domain.UnitTests
         [InlineData(UserTypes.AuthorizedUser)]
         public async Task Can_search_favorites(UserTypes userType)
         {
-            _baseDomain.User = User[userType];
+            _baseDomain.User = _user[userType];
             await _registrationDomain.SearchFavorites(null);
         }
 
@@ -98,7 +99,7 @@ namespace FullStackTraining.CallMeBack.Domain.UnitTests
         [InlineData(UserTypes.UnauthorizedUser)]
         public async Task Cannot_search_favorites(UserTypes userType)
         {
-            _baseDomain.User = User[userType];
+            _baseDomain.User = _user[userType];
             await Assert.ThrowsAsync<SecurityException>(() =>
                 _registrationDomain.SearchFavorites(null));
         }
