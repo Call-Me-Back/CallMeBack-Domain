@@ -1,0 +1,17 @@
+version: 1.0.{build}
+assembly_info:
+  patch: true
+  file: '**\SolutionInfo.*'
+  assembly_version: ${base_version}.{build}
+  assembly_file_version: ${base_version}.{build}
+  assembly_informational_version: ${base_version}-build.{build}
+environment:
+  base_version: 1.0.0
+before_build:
+- cmd: nuget restore
+build:
+  publish_nuget: true
+  publish_nuget_symbols: true
+  include_nuget_references: true
+  parallel: true
+  verbosity: minimal
