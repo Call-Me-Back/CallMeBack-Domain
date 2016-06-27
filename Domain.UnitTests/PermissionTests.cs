@@ -8,8 +8,8 @@ using Basics.Testing.Xunit;
 
 using FullStackTraining.CallMeBack.Domain.Contracts.Interfaces;
 using FullStackTraining.CallMeBack.Domain.Contracts.Models;
-using FullStackTraining.CallMeBack.Domain.UnitTests.Infrastructure;
 using FullStackTraining.CallMeBack.Repository.Contracts;
+using FullStackTraining.CallMeBack.Tests.Shared;
 
 using NSubstitute;
 
@@ -18,41 +18,18 @@ using Xunit.Abstractions;
 
 namespace FullStackTraining.CallMeBack.Domain.UnitTests
 {
-    public sealed class XUnitOutputTraceListener : TraceListener
+    public sealed class PermissionTests : IClassFixture<UserFixture>
     {
-        private readonly ITestOutputHelper _output;
-
-        /// <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.TraceListener" /> class.</summary>
-        public XUnitOutputTraceListener(ITestOutputHelper output)
-        {
-            _output = output;
-        }
-
-        /// <summary>When overridden in a derived class, writes the specified message to the listener you create in the derived class.</summary>
-        /// <param name="message">A message to write. </param>
-        public override void Write(string message)
-        {
-            _output.WriteLine(message);
-        }
-
-        /// <summary>When overridden in a derived class, writes a message to the listener you create in the derived class, followed by a line terminator.</summary>
-        /// <param name="message">A message to write. </param>
-        public override void WriteLine(string message)
-        {
-            _output.WriteLine(message);
-        }
-    }
-
-    public sealed class PermissionTests : IClassFixture<UserContextFixture>
-    {
-        private readonly UserContextFixture _user;
+        private readonly UserFixture _user;
         private readonly IBaseDomain _baseDomain;
         private readonly IRegistrationDomain _registrationDomain;
 
-        public PermissionTests(UserContextFixture userContextFixture, ITestOutputHelper output)
+        public PermissionTests(UserFixture userContextFixture, ITestOutputHelper output)
         {
             Trace.Listeners.Add(new XUnitOutputTraceListener(output));
+
             _user = userContextFixture;
+
             var registrationRepository = Substitute.For<IRegistrationRepository>();
             _registrationDomain = new RegistrationDomain(registrationRepository);
             _baseDomain = (IBaseDomain)_registrationDomain;

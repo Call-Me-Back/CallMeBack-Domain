@@ -6,7 +6,7 @@
 <#@ output extension=".cs" #>
 
 <#
-const string ns = "CallMeBack.Domain.UnitTests";
+const string ns = "FullStackTraining.CallMeBack.Domain.UnitTests";
 const string className = "PermissionTest";
 #>
 
@@ -17,19 +17,19 @@ using Basics.Containers;
 using Basics.Domain;
 using Basics.Testing.Xunit;
 
-using CallMeBack.Domain.Contracts.Interfaces;
-using CallMeBack.Domain.UnitTests.Infrastructure;
+using FullStackTraining.CallMeBack.Domain.Contracts.Interfaces;
+using FullStackTraining.CallMeBack.Tests.Shared;
 
 using Xunit;
 
 namespace <#= ns #>
 {
-    public partial class <#= className #> : BaseUserContextTest<ContainerFixture, UserContextFixture>
+    public partial class <#= className #> : BaseUserContextTest<ContainerFixture, UserFixture>
 	{
         private readonly IDomainFactory _domainFactory;
 
-        public <#= className #>(ContainerFixture containerFixture, UserContextFixture userContextFixture)
-            : base(containerFixture, userContextFixture)
+        public <#= className #>(ContainerFixture containerFixture, UserFixture userFixture)
+            : base(containerFixture, userFixture)
         {
             _domainFactory = containerFixture.Container.Resolve<IDomainFactory>();
         }

@@ -1,7 +1,9 @@
 ﻿using Basics.Containers;
 using Basics.Testing.Xunit;
 
-namespace FullStackTraining.CallMeBack.Domain.UnitTests.Infrastructure
+using FullStackTraining.CallMeBack.Domain;
+
+namespace FullStackTraining.CallMeBack.Tests.Shared
 {
     public sealed class ContainerFixture : ContainerFixtureBase
     {
