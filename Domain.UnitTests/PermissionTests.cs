@@ -7,6 +7,7 @@ using Basics.Domain;
 using Basics.Testing.Xunit;
 
 using FullStackTraining.CallMeBack.Domain.Contracts.Interfaces;
+using FullStackTraining.CallMeBack.Domain.Contracts.Models;
 using FullStackTraining.CallMeBack.Domain.UnitTests.Infrastructure;
 using FullStackTraining.CallMeBack.Repository.Contracts;
 
@@ -61,9 +62,8 @@ namespace FullStackTraining.CallMeBack.Domain.UnitTests
         [InlineData(UserTypes.AuthorizedAdmin)]
         public async Task Can_register_callback_number(UserTypes userType)
         {
-            Trace.WriteLine("Testing");
             _baseDomain.User = _user[userType];
-            await _registrationDomain.RegisterCallbackNumber(null);
+            await _registrationDomain.RegisterCallbackNumber(new CallbackNumber());
         }
 
         [Theory]
@@ -74,7 +74,7 @@ namespace FullStackTraining.CallMeBack.Domain.UnitTests
         {
             _baseDomain.User = _user[userType];
             await Assert.ThrowsAsync<SecurityException>(() =>
-                _registrationDomain.RegisterCallbackNumber(null));
+                _registrationDomain.RegisterCallbackNumber(new CallbackNumber()));
         }
 
         [Theory]
@@ -101,7 +101,7 @@ namespace FullStackTraining.CallMeBack.Domain.UnitTests
         public async Task Can_register_favorite(UserTypes userType)
         {
             _baseDomain.User = _user[userType];
-            await _registrationDomain.RegisterFavorite(null);
+            await _registrationDomain.RegisterFavorite(new Favorite());
         }
 
         [Theory]
@@ -112,7 +112,7 @@ namespace FullStackTraining.CallMeBack.Domain.UnitTests
         {
             _baseDomain.User = _user[userType];
             await Assert.ThrowsAsync<SecurityException>(() =>
-                _registrationDomain.RegisterFavorites(null));
+                _registrationDomain.RegisterFavorite(new Favorite()));
         }
 
         [Theory]
