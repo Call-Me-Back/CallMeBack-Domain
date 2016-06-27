@@ -25,6 +25,8 @@ namespace FullStackTraining.CallMeBack.Domain.Contracts.Interfaces
         /// <returns>Task object representing the action.</returns>
         Task RegisterCallbackNumbers(IEnumerable<CallbackNumber> numbers);
 
+        Task DeleteCallbackNumbers(IEnumerable<Guid> ids);
+
         Task RegisterFavorites(IEnumerable<Favorite> favorites);
 
         Task<FavoriteSearchResults> SearchFavorites(FavoriteSearchCriteria criteria);
@@ -37,14 +39,48 @@ namespace FullStackTraining.CallMeBack.Domain.Contracts.Interfaces
             return (await domain.GetCallbackNumbers(new[] { id }))?.FirstOrDefault();
         }
 
-        public static async Task RegisterCallbackNumber(this IRegistrationDomain domain, CallbackNumber number)
+        public static Task RegisterCallbackNumber(this IRegistrationDomain domain, CallbackNumber number)
         {
-            await domain.RegisterCallbackNumbers(new[] {number});
+            if (domain == null)
+                throw new ArgumentNullException(nameof(domain));
+            if (number == null)
+                throw new ArgumentNullException(nameof(number));
+            return domain.RegisterCallbackNumbers(new[] {number});
         }
 
-        public static async Task RegisterFavorite(this IRegistrationDomain domain, Favorite favorite)
+        public static Task DeleteCallbackNumber(this IRegistrationDomain domain, Guid id)
         {
-            await domain.RegisterFavorites(new[] {favorite});
+            if (domain == null)
+                throw new ArgumentNullException(nameof(domain));
+            return domain.DeleteCallbackNumbers(new[] { id });
+        }
+
+        public static Task DeleteCallbackNumbers(this IRegistrationDomain domain, IEnumerable<CallbackNumber> numbers)
+        {
+            if (domain == null)
+                throw new ArgumentNullException(nameof(domain));
+            if (numbers == null)
+                throw new ArgumentNullException(nameof(numbers));
+            return domain.DeleteCallbackNumbers(numbers.Select(number => number.Id));
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        public static Task DeleteCallbackNumber(this IRegistrationDomain domain, CallbackNumber number)
+        {
+            if (domain == null)
+                throw new ArgumentNullException(nameof(domain));
+            if (number == null)
+                throw new ArgumentNullException(nameof(number));
+            return domain.DeleteCallbackNumbers(new[] { number.Id });
+        }
+
+        public static Task RegisterFavorite(this IRegistrationDomain domain, Favorite favorite)
+        {
+            if (domain == null)
+                throw new ArgumentNullException(nameof(domain));
+            if (favorite == null)
+                throw new ArgumentNullException(nameof(favorite));
+            return domain.RegisterFavorites(new[] {favorite});
         }
     }
 }

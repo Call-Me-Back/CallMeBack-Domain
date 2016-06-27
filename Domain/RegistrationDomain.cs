@@ -43,6 +43,11 @@ namespace FullStackTraining.CallMeBack.Domain
             return await _repository.SearchCallbackNumbers(criteria);
         }
 
+        Task IRegistrationDomain.DeleteCallbackNumbers(IEnumerable<Guid> ids)
+        {
+            return Task.FromResult(0);
+        }
+
         async Task IRegistrationDomain.RegisterFavorites(IEnumerable<Favorite> favorites)
         {
             User.Demand(Permissions.RegisterFavorites);
