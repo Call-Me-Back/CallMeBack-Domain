@@ -1,12 +1,10 @@
-version: 1.0.{build}
+version: 1.1.{build}
 assembly_info:
   patch: true
   file: '**\SolutionInfo.*'
   assembly_version: '{version}'
   assembly_file_version: '{version}'
-  assembly_informational_version: '{version}-pre'
-environment:
-  base_version: 1.0.0
+  assembly_informational_version: '{version}'
 before_build:
 - cmd: nuget restore
 build:
