@@ -11,7 +11,7 @@ namespace FullStackTraining.CallMeBack.Repository
     {
         Task<CallbackNumberCollection> IRegistrationRepository.GetCallbackNumbers(IEnumerable<Guid> ids)
         {
-            throw new InvalidOperationException();
+            throw new NotImplementedException();
         }
 
         Task IRegistrationRepository.RegisterCallbackNumbers(IEnumerable<CallbackNumber> numbers)
